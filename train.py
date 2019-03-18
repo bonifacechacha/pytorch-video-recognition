@@ -23,14 +23,16 @@ resume_epoch = 0  # Default is 0, change if want to resume
 useTest = True # See evolution of the test set when training
 nTestInterval = 20 # Run on test set every nTestInterval epochs
 snapshot = 50 # Store a model every snapshot epochs
-lr = 1e-3 # Learning rate
+lr = 1e-4 # Learning rate
 
-dataset = 'ucf101' # Options: hmdb51 or ucf101
+dataset = 'dogcentric' # Options: hmdb51 or ucf101
 
 if dataset == 'hmdb51':
     num_classes=51
 elif dataset == 'ucf101':
     num_classes = 101
+elif dataset == 'dogcentric':
+   num_classes = 10
 else:
     print('We only implemented hmdb and ucf datasets.')
     raise NotImplementedError
@@ -94,9 +96,9 @@ def train_model(dataset=dataset, save_dir=save_dir, num_classes=num_classes, lr=
     writer = SummaryWriter(log_dir=log_dir)
 
     print('Training model on {} dataset...'.format(dataset))
-    train_dataloader = DataLoader(VideoDataset(dataset=dataset, split='train',clip_len=16), batch_size=20, shuffle=True, num_workers=4)
-    val_dataloader   = DataLoader(VideoDataset(dataset=dataset, split='val',  clip_len=16), batch_size=20, num_workers=4)
-    test_dataloader  = DataLoader(VideoDataset(dataset=dataset, split='test', clip_len=16), batch_size=20, num_workers=4)
+    train_dataloader = DataLoader(VideoDataset(dataset=dataset, split='train',clip_len=16), batch_size=4, shuffle=True, num_workers=4)
+    val_dataloader   = DataLoader(VideoDataset(dataset=dataset, split='val',  clip_len=16), batch_size=4, num_workers=4)
+    test_dataloader  = DataLoader(VideoDataset(dataset=dataset, split='test', clip_len=16), batch_size=4, num_workers=4)
 
     trainval_loaders = {'train': train_dataloader, 'val': val_dataloader}
     trainval_sizes = {x: len(trainval_loaders[x].dataset) for x in ['train', 'val']}

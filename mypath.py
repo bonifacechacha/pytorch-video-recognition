@@ -16,10 +16,14 @@ class Path(object):
             output_dir = '/path/to/VAR/hmdb51'
 
             return root_dir, output_dir
+        elif database == 'dogcentric':
+            root_dir = '/ssd/datasets/dogcentric/video/'
+            output_dir = '/ssd/datasets/dogcentric/preprocessed/'
+            return root_dir,output_dir
         else:
             print('Database {} not available.'.format(database))
             raise NotImplementedError
 
     @staticmethod
     def model_dir():
-        return '/path/to/Models/c3d-pretrained.pth'
+        return '/home/chacha/data/c3d-pretrained.pth'
